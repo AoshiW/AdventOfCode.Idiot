@@ -6,7 +6,8 @@ public class Day20 : IDay<long>
     public long Part1(ReadOnlySpan<char> span)
     {
         var input = ParseInput(span);
-        Mix(input);
+        var buffer = new (long, bool)[input.Count];
+        Mix(input, buffer);
         var _1000 = input.Find((0, true))!;
         for (var i = 0; i < 1000; i++)
             _1000 = _1000.NextCircleNode();
@@ -37,14 +38,12 @@ public class Day20 : IDay<long>
             next!.ValueRef.Item1 *= 811589153;
         }
         while ((next = next!.Next) is not null);
-        Mix(input);
-        Mix2(input);
-        Mix(input);
-        Mix2(input);
-        Mix(input);
-        Mix2(input);
-        Mix(input);
-        Mix2(input);
+        var buffer = new (long, bool)[input.Count];
+        for (int i = 0; i < 4; i++)
+        {
+            Mix(input, buffer);
+            Mix2(input, buffer);
+        }
         var _1000 = input.Find((0, true));
         for (var i = 0; i < 1000; i++)
             _1000 = _1000.NextCircleNode();
@@ -67,14 +66,14 @@ public class Day20 : IDay<long>
         return list;
     }
 
-    static void Mix(LinkedList<(long Value, bool IsMoved)> data)
+    static void Mix(LinkedList<(long Value, bool IsMoved)> data, (long, bool)[] buffer)
     {
-        var dataOrig = data.ToArray();
-        foreach (var line in dataOrig)
+        data.CopyTo(buffer, 0);
+        foreach (var line in buffer)
         {
             var item = data.Find(line)!;
             item.ValueRef.IsMoved = true;
-            var moveCount = long.Abs(item.Value.Value);
+            var moveCount = long.Abs(item.Value.Value % buffer.Length);
             if (moveCount == 0)
                 continue;
             var next = item;
@@ -92,10 +91,10 @@ public class Day20 : IDay<long>
         }
     }
 
-    static void Mix2(LinkedList<(long, bool)> data)
+    static void Mix2(LinkedList<(long Value, bool IsMoved)> data, (long, bool)[] buffer)
     {
-        var dataOrig = data.ToArray();
-        foreach (var line in dataOrig)
+        data.CopyTo(buffer, 0);
+        foreach (var line in buffer)
         {
             var item = data.Find((line.Item1, true))!;
             item.ValueRef.Item2 = false;

@@ -14,8 +14,8 @@ public static class CollectionsExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ReadOnlySpan<T> AsReadOnlySpan<T>(this List<T> list) => CollectionsMarshal.AsSpan(list);
 
-    public static LinkedListNode<T> NextCircleNode<T>(this LinkedListNode<T> item) => item.Next! ?? item!.List!.First!;
-    public static LinkedListNode<T> PreviousCircleNode<T>(this LinkedListNode<T> item) => item.Previous! ?? item!.List!.Last!;
+    public static LinkedListNode<T> NextCircleNode<T>(this LinkedListNode<T> item) => item.Next ?? item!.List!.First!;
+    public static LinkedListNode<T> PreviousCircleNode<T>(this LinkedListNode<T> item) => item.Previous ?? item!.List!.Last!;
     public static IEnumerable<T> AsEnumerable<T>(this T[,] array)
     {
         for (int i = 0; i < array.GetLength(0); i++)

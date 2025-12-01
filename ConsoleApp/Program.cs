@@ -1,7 +1,7 @@
 ﻿using AdventOfCode.Client;
 using AdventOfCode.Client.Caching;
 using AdventOfCode.Puzzles;
-using AdventOfCode.Puzzles.Y2017;
+using AdventOfCode.Puzzles.Y2025;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -16,7 +16,7 @@ var options = new AdventOfCodeClientOptions
 };
 var client = new AdventOfCodeClient(options, new FileSystemCache(cacheDir!));
 
-RunPuzzle<Day10>(client);
+RunPuzzle<Day01>(client);
 
 [Conditional("DEBUG")]
 static void RunPuzzle<T>(AdventOfCodeClient client) where T : IDay, new()
