@@ -16,6 +16,7 @@ var options = new AdventOfCodeClientOptions
 };
 var client = new AdventOfCodeClient(options, new FileSystemCache(cacheDir!));
 
+// Y22/20, Y17/10
 RunPuzzle<Day01>(client);
 
 [Conditional("DEBUG")]
