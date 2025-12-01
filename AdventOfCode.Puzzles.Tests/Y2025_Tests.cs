@@ -1,9 +1,11 @@
-﻿namespace AdventOfCode.Puzzles.Tests;
+﻿using AdventOfCode.Puzzles.Y2025;
+
+namespace AdventOfCode.Puzzles.Tests;
 
 [TestClass]
 public class Y2025_Tests
 {
-    //[TestMethod] public async Task Day01() => await Assert.TestAsync<Day01, int>(default, default);
+    [TestMethod] public async Task Day01() => await Assert.TestAsync<Day01, int>(1145, 6561);
     //[TestMethod] public async Task Day02() => await Assert.TestAsync<Day02, int>(default, default);
     //[TestMethod] public async Task Day03() => await Assert.TestAsync<Day03, int>(default, default);
     //[TestMethod] public async Task Day04() => await Assert.TestAsync<Day04, int>(default, default);
