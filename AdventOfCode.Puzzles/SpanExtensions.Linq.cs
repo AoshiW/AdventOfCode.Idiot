@@ -1,0 +1,81 @@
+﻿using System.Numerics;
+
+namespace AdventOfCode.Puzzles;
+
+public static partial class SpanExtensions
+{
+    public static TAccumulate Aggregate<TSource, TAccumulate>(this ReadOnlySpan<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
+    {
+        TAccumulate result = seed;
+        foreach (TSource element in source)
+        {
+            result = func(result, element);
+        }
+
+        return result;
+    }
+
+    public static TAccumulate Aggregate<TSource, TAccumulate>(this Span<TSource> source, TAccumulate seed, Func<TAccumulate, TSource, TAccumulate> func)
+    {
+        return Aggregate((ReadOnlySpan<TSource>)source, seed, func); 
+    }
+
+    public static T? Find<T>(this ReadOnlySpan<T> source, Predicate<T> match)
+    {
+        foreach (var item in source)
+        {
+            if (match(item))
+                return item;
+        }
+        return default;
+    }
+
+    public static T? Find<T>(this Span<T> source, Predicate<T> match)
+        => Find((ReadOnlySpan<T>)source, match);
+
+    public static bool All<T>(this ReadOnlySpan<T> source, Predicate<T> predicate)
+    {
+        foreach (var item in source)
+        {
+            if (!predicate(item))
+                return false;
+        }
+        return true;
+    }
+
+    public static bool Any<T>(this ReadOnlySpan<T> source, Predicate<T> predicate)
+    {
+        foreach (var item in source)
+        {
+            if (predicate(item))
+                return true;
+        }
+        return false;
+    }
+
+    public static bool Any<T>(this Span<T> source, Predicate<T> predicate)
+        => Any((ReadOnlySpan<T>)source, predicate);
+    public static T Sum<T>(this ReadOnlySpan<T> source) where T : INumberBase<T>
+    {
+        var sum = T.Zero;
+        foreach (var item in source)
+        {
+            sum += item;
+        }
+        return sum;
+    }
+
+    public static T Sum<T>(this Span<T> source) where T : INumberBase<T>
+        => Sum((ReadOnlySpan<T>)source);
+
+    public static int Count<T>(this ReadOnlySpan<T> span, Predicate<T> predicate)
+    {
+        var count = 0;
+        foreach (var item in span)
+        {
+            if (predicate(item))
+                count++;
+        }
+        return count;
+    }
+}

@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="AdventOfCode.Client/AdventOfCode.Client.csproj" Id="3f912ba0-badc-4394-873a-6520e823fcb1" />
+  <Project Path="AdventOfCode.Puzzles.Tests/AdventOfCode.Puzzles.Tests.csproj" Id="8aef8f35-bef4-4559-8f03-9e554eb2c4f1" />
+  <Project Path="AdventOfCode.Puzzles/AdventOfCode.Puzzles.csproj" Id="e49e6bab-fbad-4fa7-8265-a68d1f38e8eb" />
+  <Project Path="ConsoleApp/ConsoleApp.csproj" Id="20aa37fb-c82b-452c-a3c8-5fe4715ace53" />
+</Solution>

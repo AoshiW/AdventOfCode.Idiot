@@ -1,0 +1,36 @@
+﻿namespace AdventOfCode.Puzzles.Y2020;
+
+[AocPuzzle(2020, 13, "Shuttle Search")]
+public class Day13 : IDay<long>
+{
+    public long Part1(ReadOnlySpan<char> span)
+    {
+        var input = ParseInput(span);
+        var ids = input.neco.Skip(1).Where(x => x is not null).Cast<int>().ToArray();
+        int waitTime = ids.Min(x => x - input.Timestamp % x);
+        var id = ids.First(x => x - input.Timestamp % x == waitTime);
+        return waitTime * id;
+    }
+
+    static (int Timestamp, List<int?> neco) ParseInput(ReadOnlySpan<char> span)
+    {
+        var enumerator = span.EnumerateLines();
+        enumerator.MoveNext();
+        var timestamp = int.Parse(enumerator.Current);
+        enumerator.MoveNext();
+        span = enumerator.Current;
+        var bu = new List<int?>();
+        foreach (var item in enumerator.Current.EnumerateSlices(","))
+        {
+            if (int.TryParse(item, out var value))
+            {
+                bu.Add(value);
+            }
+            else
+                bu.Add(null);
+        }
+        return (timestamp, bu);
+    }
+
+    public long Part2(ReadOnlySpan<char> span) => throw new NotImplementedException();
+}

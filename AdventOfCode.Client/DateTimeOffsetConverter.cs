@@ -1,0 +1,20 @@
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace AdventOfCode.Client;
+
+class DateTimeOffsetConverter : JsonConverter<DateTimeOffset>
+{
+    /// <inheritdoc/>
+    public override DateTimeOffset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        var unixTimestamp = reader.GetInt64();
+        return DateTimeOffset.FromUnixTimeSeconds(unixTimestamp);
+    }
+
+    /// <inheritdoc/>
+    public override void Write(Utf8JsonWriter writer, DateTimeOffset value, JsonSerializerOptions options)
+    {
+        writer.WriteNumberValue(value.ToUnixTimeSeconds());
+    }
+}
