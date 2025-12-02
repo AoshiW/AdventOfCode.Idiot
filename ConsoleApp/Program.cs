@@ -1,7 +1,7 @@
 ﻿using AdventOfCode.Client;
 using AdventOfCode.Client.Caching;
 using AdventOfCode.Puzzles;
-using AdventOfCode.Puzzles.Y2022;
+using AdventOfCode.Puzzles.Y2025;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -9,23 +9,29 @@ Console.WriteLine("Hello, AdventOfCode!");
 
 var options = new AdventOfCodeClientOptions
 {
-    Session = "53616c7465645f5fb6dde0806376db5061fdb7e7bba1f6757e23a31abbce6c9955c8c487f900df6d481992c16f686e9f770691a8156c6c624c61514591f8a0b7",
+    Session = Environment.GetEnvironmentVariable("AOC_SESSION")!,
     ContactInformation = new("(User: Aoshi.W@gmail.com)"),
 };
-var client = new AdventOfCodeClient(options, new FileSystemCache("X:/.temp/spc_cache"));
+var client = new AdventOfCodeClient(options, new FileSystemCache(Environment.GetEnvironmentVariable("AOC_CACHE")!));
 
 // Y22/20, Y17/10
-RunPuzzle<Day01>(client);
+RunPuzzle<Day02>(client);
 
 [Conditional("DEBUG")]
-static void RunPuzzle<T>(AdventOfCodeClient client) where T : IDay, new()
+static void RunPuzzle<T>(AdventOfCodeClient client, CancellationToken cancellationToken = default) where T : IDay, new()
 {
     var att = typeof(T).GetCustomAttribute<AocPuzzleAttribute>()!;
     var day = new T();
-    var rawInput = client.GetPuzzleInputAsStringAsync(att.Year, att.Day, default).GetAwaiter().GetResult();
+    var rawInput = client.GetPuzzleInputAsStringAsync(att.Year, att.Day, cancellationToken).GetAwaiter().GetResult();
     var input = rawInput.AsSpan().TrimEnd();
+    {
+        // without this code RunPart<T> sometimes allocate 888 bytes ¯\_(ツ)_/¯ (Y2025 D01)
+        var enumeator = input.EnumerateLines();
+        //enumeator.MoveNext();
+    }
+
     Console.WriteLine($"Puzzzle: Y{att.Year} D{att.Day:00} - {att.Title}");
-    foreach(var line in input.EnumerateLines()) { }
+    
     if (day is IDay<int> dayInd)
     {
         RunPart(dayInd.Part1, input, 1);

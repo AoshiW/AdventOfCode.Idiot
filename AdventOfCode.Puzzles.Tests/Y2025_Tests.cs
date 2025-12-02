@@ -6,7 +6,7 @@ namespace AdventOfCode.Puzzles.Tests;
 public class Y2025_Tests
 {
     [TestMethod] public async Task Day01() => await Assert.TestAsync<Day01, int>(1145, 6561);
-    //[TestMethod] public async Task Day02() => await Assert.TestAsync<Day02, int>(default, default);
+    [TestMethod] public async Task Day02() => await Assert.TestAsync<Day02, long>(8576933996, 25663320831);
     //[TestMethod] public async Task Day03() => await Assert.TestAsync<Day03, int>(default, default);
     //[TestMethod] public async Task Day04() => await Assert.TestAsync<Day04, int>(default, default);
     //[TestMethod] public async Task Day05() => await Assert.TestAsync<Day05, int>(default, default);
