@@ -1,4 +1,6 @@
-﻿using AdventOfCode.Puzzles;
+﻿using AdventOfCode.Client;
+using AdventOfCode.Client.Caching;
+using AdventOfCode.Puzzles;
 using BenchmarkDotNet.Attributes;
 using System.Reflection;
 
@@ -13,8 +15,14 @@ public class DayBenchmark<TDay, TResult> where TDay : IDay<TResult>, new()
 
     public DayBenchmark()
     {
+        var options = new AdventOfCodeClientOptions
+        {
+            Session = Environment.GetEnvironmentVariable("AOC_SESSION")!,
+            ContactInformation = new("(User: Aoshi.W@gmail.com)"),
+        };
+        var Client = new AdventOfCodeClient(options, new FileSystemCache(Environment.GetEnvironmentVariable("AOC_CACHE")!));
         var aocPuzzle = typeof(TDay).GetCustomAttribute<AocPuzzleAttribute>();
-        _input = Program.Client.GetPuzzleInputAsStringAsync(aocPuzzle.Year, aocPuzzle.Day).GetAwaiter().GetResult();
+        _input = Client.GetPuzzleInputAsStringAsync(aocPuzzle.Year, aocPuzzle.Day).GetAwaiter().GetResult();
         _input = _input.TrimEnd();
     }
 

@@ -64,14 +64,11 @@ partial class Program
         Console.WriteLine($"Part{part}: {result}\t t={elapsed.TotalMilliseconds}ms\t{alloc} bytes");
     }
 
-    //[Conditional("RELEASE")]
+    [Conditional("RELEASE")]
     static void RunBechmark<T>() where T : IDay, new()
     {
         var iDay = typeof(T).GetInterface(typeof(IDay<>).Name);
         var iDayT = iDay.GenericTypeArguments[0];
-        
-        
-        return;
         BenchmarkRunner.Run(typeof(DayBenchmark<,>).MakeGenericType(typeof(T), iDayT));
     }
 }

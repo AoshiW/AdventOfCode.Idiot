@@ -1,5 +1,4 @@
-﻿
-namespace AdventOfCode.Puzzles.Y2025;
+﻿namespace AdventOfCode.Puzzles.Y2025;
 
 [AocPuzzle(2025, 2, "Gift Shop")]
 public class Day02 : IDay<long>
