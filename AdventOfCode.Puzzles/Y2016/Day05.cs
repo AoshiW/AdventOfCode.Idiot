@@ -27,7 +27,7 @@ public class Day05 : IDay<string>
         span.CopyTo(str);
         var numstr = str.Slice(span.Length);
         Span<char> code = stackalloc char[8];
-        Span<byte> hashBytes = stackalloc byte[MagicNumbers.MD5HashByteCount];
+        Span<byte> hashBytes = stackalloc byte[MD5.HashSizeInBytes];
         for (int i = 0; predicate(code); i++)
         {
             i.TryFormat(numstr, out var written);

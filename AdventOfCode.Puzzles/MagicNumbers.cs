@@ -5,8 +5,6 @@ namespace AdventOfCode.Puzzles;
 
 public static class MagicNumbers
 {
-    public const int MD5HashByteCount = 16;
-
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int MaxStringLengthFor<T>()
     {
