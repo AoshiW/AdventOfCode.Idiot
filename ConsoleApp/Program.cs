@@ -2,8 +2,6 @@
 using AdventOfCode.Client.Caching;
 using AdventOfCode.Puzzles;
 using AdventOfCode.Puzzles.Y2025;
-using System.Diagnostics;
-using System.Reflection;
 
 Console.WriteLine("Hello, AdventOfCode!");
 
@@ -12,62 +10,14 @@ var options = new AdventOfCodeClientOptions
     Session = Environment.GetEnvironmentVariable("AOC_SESSION")!,
     ContactInformation = new("(User: Aoshi.W@gmail.com)"),
 };
-var client = new AdventOfCodeClient(options, new FileSystemCache(Environment.GetEnvironmentVariable("AOC_CACHE")!));
+Client = new AdventOfCodeClient(options, new FileSystemCache(Environment.GetEnvironmentVariable("AOC_CACHE")!));
 
 // Y22/20, Y17/10
-RunPuzzle<Day02>(client);
 
-[Conditional("DEBUG")]
-static void RunPuzzle<T>(AdventOfCodeClient client, CancellationToken cancellationToken = default) where T : IDay, new()
+Run<Day03>();
+
+void Run<T>() where T : IDay, new()
 {
-    var att = typeof(T).GetCustomAttribute<AocPuzzleAttribute>()!;
-    var day = new T();
-    var rawInput = client.GetPuzzleInputAsStringAsync(att.Year, att.Day, cancellationToken).GetAwaiter().GetResult();
-    var input = rawInput.AsSpan().TrimEnd();
-    {
-        // without this code RunPart<T> sometimes allocate 888 bytes ¯\_(ツ)_/¯ (Y2025 D01)
-        var enumeator = input.EnumerateLines();
-        //enumeator.MoveNext();
-    }
-
-    Console.WriteLine($"Puzzzle: Y{att.Year} D{att.Day:00} - {att.Title}");
-    
-    if (day is IDay<int> dayInd)
-    {
-        RunPart(dayInd.Part1, input, 1);
-        RunPart(dayInd.Part2, input, 2);
-    }
-    else if (day is IDay<long> dayLong)
-    {
-        RunPart(dayLong.Part1, input, 1);
-        RunPart(dayLong.Part2, input, 2);
-    }
-    else if (day is IDay<ulong> dayULong)
-    {
-        RunPart(dayULong.Part1, input, 1);
-        RunPart(dayULong.Part2, input, 2);
-    }
-    else if (day is IDay<string> dayString)
-    {
-        RunPart(dayString.Part1, input, 1);
-        RunPart(dayString.Part2, input, 2);
-    }
-    else
-    {
-        Console.WriteLine("Unsupported IDay<> return type, callback to IDay");
-        RunPart(day.Part1, input, 1);
-        RunPart(day.Part2, input, 2);
-    }
-}
-
-static void RunPart<T>(Func<ReadOnlySpan<char>, T> func, ReadOnlySpan<char> input, int part)
-{
-    var alloc = GC.GetAllocatedBytesForCurrentThread();
-    var startTime = Stopwatch.GetTimestamp();
-
-    var result = func(input);
-    var elapsed = Stopwatch.GetElapsedTime(startTime);
-    alloc = GC.GetAllocatedBytesForCurrentThread() - alloc;
-
-    Console.WriteLine($"Part{part}: {result}\t t={elapsed.TotalMilliseconds}ms\t{alloc} bytes");
+    RunPuzzle<T>();
+    RunBechmark<T>();
 }
