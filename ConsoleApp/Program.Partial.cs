@@ -12,9 +12,9 @@ partial class Program
     [Conditional("DEBUG")]
     static void RunPuzzle<T>(CancellationToken cancellationToken = default) where T : IDay, new()
     {
-        var att = typeof(T).GetCustomAttribute<AocPuzzleAttribute>()!;
+        var aocPuzzleAtt = typeof(T).GetCustomAttribute<AocPuzzleAttribute>()!;
         var day = new T();
-        var rawInput = Client.GetPuzzleInputAsStringAsync(att.Year, att.Day, cancellationToken).GetAwaiter().GetResult();
+        var rawInput = Client.GetPuzzleInputAsStringAsync(aocPuzzleAtt.Year, aocPuzzleAtt.Day, cancellationToken).GetAwaiter().GetResult();
         var input = rawInput.AsSpan().TrimEnd();
         {
             // without this code RunPart<T> sometimes allocate 888 bytes ¯\_(ツ)_/¯ (Y2025 D01)
@@ -22,7 +22,7 @@ partial class Program
             enumeator.MoveNext();
         }
 
-        Console.WriteLine($"Puzzzle: Y{att.Year} D{att.Day:00} - {att.Title}");
+        Console.WriteLine($"Puzzzle: Y{aocPuzzleAtt.Year} D{aocPuzzleAtt.Day:00} - {aocPuzzleAtt.Title}");
 
         if (day is IDay<int> dayInd)
         {
