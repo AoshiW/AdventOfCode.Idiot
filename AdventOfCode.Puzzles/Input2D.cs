@@ -51,6 +51,18 @@ public readonly ref struct Input2D
             point.Y >= 0 && point.Y < Rows;
     }
 
+    public bool TryGet(Vector2<int> point, out char c)
+    {
+        if (point.X >= 0 && point.X < Columns &&
+            point.Y >= 0 && point.Y < Rows)
+        {
+            c = this[point];
+            return true;
+        }
+        c = default;
+        return false;
+    }
+
     public ReadOnlySpan<char> GetRow(int y) => _span.Slice(y * _trueRowLength, Columns);
 
     public Vector2<int> GetPointFromRawIndex(int rawIndex)
