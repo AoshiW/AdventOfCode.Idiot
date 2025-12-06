@@ -9,7 +9,7 @@ public class Y2025_Tests
     [TestMethod] public async Task Day02() => await Assert.TestAsync<Day02, long>(8576933996, 25663320831);
     [TestMethod] public async Task Day03() => await Assert.TestAsync<Day03, long>(17196, 171039099596062);
     [TestMethod] public async Task Day04() => await Assert.TestAsync<Day04, int>(1320, 8354);
-    //[TestMethod] public async Task Day05() => await Assert.TestAsync<Day05, int>(default, default);
+    [TestMethod] public async Task Day05() => await Assert.TestAsync<Day05, long>(690, 344323629240733);
     //[TestMethod] public async Task Day06() => await Assert.TestAsync<Day06, int>(default, default);
     //[TestMethod] public async Task Day07() => await Assert.TestAsync<Day07, int>(default, default);
     //[TestMethod] public async Task Day08() => await Assert.TestAsync<Day08, int>(default, default);
