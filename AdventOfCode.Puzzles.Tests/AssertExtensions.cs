@@ -33,7 +33,7 @@ public static class AssertExtensions
 
             var day = new TDay();
             var input = await Client.GetPuzzleInputAsStringAsync(attribute.Year, attribute.Day);
-            var inputSpan = input.AsSpan().TrimEnd();
+            var inputSpan = input.AsSpan().TrimEnd("\r\n");
 
             Assert.AreEqual(part1, day.Part1(inputSpan), nameof(day.Part1));
             try

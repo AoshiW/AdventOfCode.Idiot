@@ -15,7 +15,7 @@ partial class Program
         var aocPuzzleAtt = typeof(T).GetCustomAttribute<AocPuzzleAttribute>()!;
         var day = new T();
         var rawInput = Client.GetPuzzleInputAsStringAsync(aocPuzzleAtt.Year, aocPuzzleAtt.Day, cancellationToken).GetAwaiter().GetResult();
-        var input = rawInput.AsSpan().TrimEnd();
+        var input = rawInput.AsSpan().TrimEnd("\r\n");
         {
             // without this code RunPart<T> sometimes allocate 888 bytes ¯\_(ツ)_/¯ (Y2025 D01)
             var enumeator = input.EnumerateLines();
