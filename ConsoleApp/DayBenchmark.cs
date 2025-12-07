@@ -26,7 +26,7 @@ public class DayBenchmark<TDay, TResult> where TDay : IDay<TResult>, new()
         _input = _input.TrimEnd("\r\n").ToString();
     }
 
-    //[Benchmark]
+    [Benchmark]
     public TResult Part1()
         => _day.Part1(_input);
 

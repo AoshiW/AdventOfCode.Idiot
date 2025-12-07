@@ -41,7 +41,7 @@ public class Day07 : IDay<long>
 
     public long Part2(ReadOnlySpan<char> span)
     {
-        return default;
+        throw new NotImplementedException();
         span = """
             .......S.......
             ...............
