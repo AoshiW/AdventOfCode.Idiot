@@ -5,39 +5,24 @@ public class Day06 : IDay<long>
 {
     public long Part1(ReadOnlySpan<char> span)
     {
-        var list = new List<List<long>>();
-        var enume = span.EnumerateLines();
-        while (enume.MoveNext())
-        {
-            if (enume.Current[0] is '+' or '*')
-                break;
-            var l = new List<long>(list.Count > 0 ? list[0].Count : 0);
-
-            foreach(var item in enume.Current.Split(' '))
-            {
-                var num = enume.Current[item];
-                if (!num.IsEmpty)
-                    l.Add(long.Parse(num));
-            }
-            list.Add(l);
-        }
-        var ops = new List<char>(list[0].Count);
-        foreach(var c in enume.Current)
-        {
-            if (c is not ' ')
-                ops.Add(c);
-        }
+        var map = new Input2D(span);
+        var ops = map.GetRow(map.Rows - 1);
+        var lasi = ops.Length;
         long sum = 0;
-        for (var i = 0; i < ops.Count; i++)
+        while (!ops.IsEmpty)
         {
-            Func<long, long, long> fnc = ops[i] is '+'
-                ? (x, y) => x + y
-                : (x, y) => x * y;
+            var i = ops.LastIndexOfAnyExcept(' ');
+            var l = lasi - i;
             long n = ops[i] is '+' ? 0 : 1;
-            for (var j = 0; j < list.Count; j++)
+            for (int r = 0; r < map.Rows-1; r++)
             {
-                n = fnc(n, list[j][i]);
+                var number = long.Parse(map.GetRow(r).Slice(i, l).Trim());
+                n = ops[i] is '+'
+                    ? n + number
+                    : n * number;
             }
+            lasi = i;
+            ops = i is 0 ? default : ops.Slice(0, i - 1);
             sum += n;
         }
         return sum;
@@ -48,16 +33,16 @@ public class Day06 : IDay<long>
         var input = new Input2D(span);
         var index = input.Columns;
         long sum = 0;
-        var arrr = new List<long>();
+        var block = new List<long>();
         while (--index >= 0)
         {
-            arrr.Insert(0, 0);
+            block.Insert(0, 0);
             for (var j = 0; j < input.Rows-1; j++)
             {
                 var c = input[index, j];
                 if (c is ' ')
                     continue;
-                arrr[0] = arrr[0] * 10 + c - '0';
+                block[0] = block[0] * 10 + c - '0';
             }
 
             if (input[index, input.Rows-1] is not ' ')
@@ -67,9 +52,9 @@ public class Day06 : IDay<long>
                     ? (x, y) => x + y
                     : (x, y) => x * y;
                 long n = op is '+' ? 0 : 1; 
-                sum += arrr.Aggregate(n, fnc);
+                sum += block.Aggregate(n, fnc);
                 index--;
-                arrr.Clear();
+                block.Clear();
             }
         }
         return sum;

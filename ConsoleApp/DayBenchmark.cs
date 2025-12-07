@@ -23,10 +23,10 @@ public class DayBenchmark<TDay, TResult> where TDay : IDay<TResult>, new()
         var Client = new AdventOfCodeClient(options, new FileSystemCache(Environment.GetEnvironmentVariable("AOC_CACHE")!));
         var aocPuzzle = typeof(TDay).GetCustomAttribute<AocPuzzleAttribute>();
         _input = Client.GetPuzzleInputAsStringAsync(aocPuzzle.Year, aocPuzzle.Day).GetAwaiter().GetResult();
-        _input = _input.TrimEnd();
+        _input = _input.TrimEnd("\r\n").ToString();
     }
 
-    [Benchmark]
+    //[Benchmark]
     public TResult Part1()
         => _day.Part1(_input);
 
