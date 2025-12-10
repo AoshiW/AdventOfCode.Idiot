@@ -97,6 +97,10 @@ public static class ExtensionsD
 
 public static class Wx
 {
+    public static T ManhattanDistance<T>(this (T X, T Y, T Z) left, (T X, T Y, T Z) right) where T : INumber<T>
+    {
+        return T.Abs(left.X - right.X) + T.Abs(left.Y - right.Y) + T.Abs(left.Z - right.Z);
+    }
     extension<T>(INumber<T>) where T : INumber<T>
     {
         public static T ManhattanDistance(Numerics.Vector2<T> left, Numerics.Vector2<T> right)
