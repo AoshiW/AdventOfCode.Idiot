@@ -101,6 +101,12 @@ public static class Wx
     {
         return T.Abs(left.X - right.X) + T.Abs(left.Y - right.Y) + T.Abs(left.Z - right.Z);
     }
+    public static T EuclideanDistance<T>(this (T X, T Y, T Z) left, (T X, T Y, T Z) right) where T : INumber<T>, IPowerFunctions<T>, IRootFunctions<T>
+    {
+        var two = T.One + T.One;
+        return T.Sqrt(T.Pow(left.X - right.X, two) + T.Pow(left.Y - right.Y, two) + T.Pow(left.Z - right.Z, two));
+    }
+    
     extension<T>(INumber<T>) where T : INumber<T>
     {
         public static T ManhattanDistance(Numerics.Vector2<T> left, Numerics.Vector2<T> right)
